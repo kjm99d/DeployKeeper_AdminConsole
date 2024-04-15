@@ -37,14 +37,12 @@ $RECYCLE.BIN/
 *.pidb
 *.suo
 *.cache
-*.sln
 *.suo
 *.user
 *.userosscache
 *.vssscc
 *.vspscc
 *.vssscc
-*.sln.docstates
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
