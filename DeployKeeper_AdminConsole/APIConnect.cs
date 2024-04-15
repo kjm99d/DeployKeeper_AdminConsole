@@ -1,0 +1,130 @@
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DeployKeeper_AdminConsole
+{
+    internal class APIConnect
+    {
+        private static APIConnect? instance;
+        private static readonly object lockObject = new object();
+
+        private const string host = "http://localhost:8080";
+        private string m_accessToken = "";
+
+        private APIConnect() { }
+
+        public static APIConnect Instance
+        {
+            get
+            {
+                lock (lockObject)
+                {
+                    if (instance == null)
+                    {
+                        instance = new APIConnect();
+                    }
+                    return instance;
+                }
+            }
+        }
+
+        public JObject GetProductList()
+        {
+            const string url = host + "/api/admin/product/all";
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", m_accessToken);
+            string strResp = HTTPConnect.Get(url, header);
+
+            return JObject.Parse(strResp);
+
+        }
+
+
+        public JObject GetUserProductList()
+        {
+            const string url = host + "/api/admin/users";
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+            string strResp = HTTPConnect.Get(url, header);
+
+            return JObject.Parse(strResp);
+
+        }
+
+        public JObject GetUserPolicy(int nUserId, int nProductId)
+        {
+            const string url = host + "/api/admin/user/policy";
+            
+            // Request Header 
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+
+            // Payloads
+            JObject obj = new JObject();
+            obj["userId"] = nUserId;
+            obj["productId"] = nProductId;
+
+
+            string strResp = HTTPConnect.Post(url, obj.ToString() ,header);
+
+            return JObject.Parse(strResp);
+        }
+
+
+        // Deprecated
+        public bool LoginAdmin(string username, string passwd)
+        {
+            const string url = host + "/api/user/login_admin";
+            JObject contents = new JObject();
+            contents["username"] = username;
+            contents["passwd"] = passwd;
+            var response = JObject.Parse(HTTPConnect.Post(url, contents.ToString()));
+            if (0 == Convert.ToInt32(response["code"]))
+            {
+                JArray datas = (JArray)response["data"];
+                m_accessToken = datas[0].ToString();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public JObject GetAllProduct()
+        {
+            const string url = host + "/api/product/all";
+            return JObject.Parse(HTTPConnect.Get(url));
+        }
+
+        public bool Login(string username, string password)
+        {
+            const string url = host + "/api/user/login";
+            JObject contents = new JObject();
+            contents["username"] = username;
+            contents["passwd"] = password;
+            var response = JObject.Parse(HTTPConnect.Post(url, contents.ToString()));
+            if (0 == Convert.ToInt32(response["code"]))
+            {
+                JArray datas = (JArray)response["data"];
+                m_accessToken = datas[0].ToString();
+
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(m_accessToken);
+
+                if (1 == Convert.ToInt32(jwtToken.Payload["isAdmin"]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+    }
+}
