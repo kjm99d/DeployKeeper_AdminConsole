@@ -34,8 +34,7 @@
             tbReadOnlyUserPasswd = new TextBox();
             tbReadOnlyUserId = new TextBox();
             lvCustomPolicy = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
+            chPolicyId = new ColumnHeader();
             chPolicyName = new ColumnHeader();
             chPolicyUse = new ColumnHeader();
             chPolicyValue = new ColumnHeader();
@@ -99,13 +98,22 @@
             // 
             // lvCustomPolicy
             // 
-            lvCustomPolicy.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, chPolicyName, chPolicyUse, chPolicyValue });
+            lvCustomPolicy.Columns.AddRange(new ColumnHeader[] { chPolicyId, chPolicyName, chPolicyUse, chPolicyValue });
+            lvCustomPolicy.FullRowSelect = true;
+            lvCustomPolicy.GridLines = true;
             lvCustomPolicy.Location = new Point(6, 22);
+            lvCustomPolicy.MultiSelect = false;
             lvCustomPolicy.Name = "lvCustomPolicy";
             lvCustomPolicy.Size = new Size(702, 267);
             lvCustomPolicy.TabIndex = 1;
             lvCustomPolicy.UseCompatibleStateImageBehavior = false;
             lvCustomPolicy.View = View.Details;
+            lvCustomPolicy.SelectedIndexChanged += lvCustomPolicy_SelectedIndexChanged;
+            lvCustomPolicy.DoubleClick += lvCustomPolicy_DoubleClick;
+            // 
+            // chPolicyId
+            // 
+            chPolicyId.Width = 0;
             // 
             // chPolicyName
             // 
@@ -156,10 +164,9 @@
         private TextBox tbReadOnlyProductId;
         private ListView lvCustomPolicy;
         private GroupBox gbPolicy;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
         private ColumnHeader chPolicyName;
         private ColumnHeader chPolicyUse;
         private ColumnHeader chPolicyValue;
+        private ColumnHeader chPolicyId;
     }
 }
