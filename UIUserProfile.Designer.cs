@@ -1,6 +1,6 @@
 ﻿namespace DeployKeeper_AdminConsole
 {
-    partial class UserProfile
+    partial class UIUserProfile
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             gbUserInfo = new GroupBox();
+            dtEnd = new DateTimePicker();
+            dtStart = new DateTimePicker();
             tbReadOnlyProductId = new TextBox();
             tbReadOnlyProductName = new TextBox();
             tbReadOnlyUserPasswd = new TextBox();
@@ -39,22 +41,48 @@
             chPolicyUse = new ColumnHeader();
             chPolicyValue = new ColumnHeader();
             gbPolicy = new GroupBox();
+            btnApply = new Button();
+            btnCancel = new Button();
             gbUserInfo.SuspendLayout();
             gbPolicy.SuspendLayout();
             SuspendLayout();
             // 
             // gbUserInfo
             // 
+            gbUserInfo.Controls.Add(dtEnd);
+            gbUserInfo.Controls.Add(dtStart);
             gbUserInfo.Controls.Add(tbReadOnlyProductId);
             gbUserInfo.Controls.Add(tbReadOnlyProductName);
             gbUserInfo.Controls.Add(tbReadOnlyUserPasswd);
             gbUserInfo.Controls.Add(tbReadOnlyUserId);
             gbUserInfo.Location = new Point(3, 3);
             gbUserInfo.Name = "gbUserInfo";
-            gbUserInfo.Size = new Size(317, 276);
+            gbUserInfo.Size = new Size(317, 149);
             gbUserInfo.TabIndex = 0;
             gbUserInfo.TabStop = false;
             gbUserInfo.Text = "사용자 계정 정보";
+            // 
+            // dtEnd
+            // 
+            dtEnd.Format = DateTimePickerFormat.Short;
+            dtEnd.Location = new Point(166, 109);
+            dtEnd.MaxDate = new DateTime(2054, 12, 31, 0, 0, 0, 0);
+            dtEnd.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
+            dtEnd.Name = "dtEnd";
+            dtEnd.Size = new Size(136, 23);
+            dtEnd.TabIndex = 5;
+            dtEnd.Value = new DateTime(2024, 4, 18, 0, 0, 0, 0);
+            // 
+            // dtStart
+            // 
+            dtStart.Format = DateTimePickerFormat.Short;
+            dtStart.Location = new Point(6, 109);
+            dtStart.MaxDate = new DateTime(2054, 12, 31, 0, 0, 0, 0);
+            dtStart.MinDate = new DateTime(2024, 1, 1, 0, 0, 0, 0);
+            dtStart.Name = "dtStart";
+            dtStart.Size = new Size(136, 23);
+            dtStart.TabIndex = 4;
+            dtStart.Value = new DateTime(2024, 4, 18, 0, 0, 0, 0);
             // 
             // tbReadOnlyProductId
             // 
@@ -104,7 +132,7 @@
             lvCustomPolicy.Location = new Point(6, 22);
             lvCustomPolicy.MultiSelect = false;
             lvCustomPolicy.Name = "lvCustomPolicy";
-            lvCustomPolicy.Size = new Size(702, 267);
+            lvCustomPolicy.Size = new Size(702, 264);
             lvCustomPolicy.TabIndex = 1;
             lvCustomPolicy.UseCompatibleStateImageBehavior = false;
             lvCustomPolicy.View = View.Details;
@@ -132,18 +160,41 @@
             // gbPolicy
             // 
             gbPolicy.Controls.Add(lvCustomPolicy);
-            gbPolicy.Location = new Point(3, 285);
+            gbPolicy.Location = new Point(3, 158);
             gbPolicy.Name = "gbPolicy";
             gbPolicy.Size = new Size(714, 301);
             gbPolicy.TabIndex = 2;
             gbPolicy.TabStop = false;
             gbPolicy.Text = "사용자 정책";
             // 
+            // btnApply
+            // 
+            btnApply.Location = new Point(555, 465);
+            btnApply.Name = "btnApply";
+            btnApply.Size = new Size(75, 23);
+            btnApply.TabIndex = 3;
+            btnApply.Text = "확인";
+            btnApply.UseVisualStyleBackColor = true;
+            btnApply.Click += btnApply_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Enabled = false;
+            btnCancel.Location = new Point(636, 465);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(75, 23);
+            btnCancel.TabIndex = 4;
+            btnCancel.Text = "취소";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
+            // 
             // UserProfile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
+            Controls.Add(btnCancel);
+            Controls.Add(btnApply);
             Controls.Add(gbPolicy);
             Controls.Add(gbUserInfo);
             Name = "UserProfile";
@@ -168,5 +219,9 @@
         private ColumnHeader chPolicyUse;
         private ColumnHeader chPolicyValue;
         private ColumnHeader chPolicyId;
+        private DateTimePicker dtEnd;
+        private DateTimePicker dtStart;
+        private Button btnApply;
+        private Button btnCancel;
     }
 }

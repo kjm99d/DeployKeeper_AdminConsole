@@ -21,7 +21,7 @@ namespace DeployKeeper_AdminConsole
 
         private TypeProduct m_products;
         private TypeUserProduct m_userProducts;
-        private UserProfile m_userProfile;
+        private UIUserProfile m_userProfile;
 
         public UserProfileManager(TreeView view)
         {
@@ -60,7 +60,7 @@ namespace DeployKeeper_AdminConsole
 
         }
 
-        public void SetUserProfile(UserProfile userProfile)
+        public void SetUserProfile(UIUserProfile userProfile)
         {
             m_userProfile = userProfile;
         }

@@ -31,7 +31,7 @@
             tvUserProfile = new TreeView();
             button1 = new Button();
             pnUserProfile = new Panel();
-            userProfile1 = new UserProfile();
+            userProfile1 = new UIUserProfile();
             pnUserProfile.SuspendLayout();
             SuspendLayout();
             // 
@@ -90,6 +90,6 @@
         private TreeView tvUserProfile;
         private Button button1;
         private Panel pnUserProfile;
-        private UserProfile userProfile1;
+        private UIUserProfile userProfile1;
     }
 }

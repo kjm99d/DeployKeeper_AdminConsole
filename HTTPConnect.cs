@@ -65,6 +65,34 @@ namespace DeployKeeper_AdminConsole
             }
         }
 
+        public static string Patch(string url, string jsonContent)
+        {
+            return Patch(url, jsonContent, new Dictionary<string, string>());
+        }
+
+        public static string Patch(string url, string jsonContent, Dictionary<string, string> additionalHeader)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+
+                foreach (var header in additionalHeader)
+                {
+                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                }
+
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = client.PatchAsync(url, content).Result;
+                response.EnsureSuccessStatusCode();
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+                return responseBody;
+            }
+            catch (HttpRequestException e)
+            {
+                return $"Error: {e.Message}";
+            }
+        }
+
         public static string Put(string url, string jsonContent)
         {
             try

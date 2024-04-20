@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace DeployKeeper_AdminConsole
 {
@@ -121,6 +122,29 @@ namespace DeployKeeper_AdminConsole
                 {
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        public bool SetCustomPolicy(int nUserId, int nProductId, List<JObject> data)
+        {
+            const string url = host + "/api/admin/user/policy";
+            JObject contents = new JObject();
+
+            contents["userId"] = nUserId;
+            contents["productId"] = nProductId;
+            contents["data"] = new JArray(data);
+
+            string jsonString = contents.ToString();
+
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+
+            var response = JObject.Parse(HTTPConnect.Patch(url, jsonString, header));
+            if (0 == Convert.ToInt32(response["code"]))
+            {
+                return true;
             }
 
             return false;

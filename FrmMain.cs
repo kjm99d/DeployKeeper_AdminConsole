@@ -14,7 +14,7 @@ namespace DeployKeeper_AdminConsole
     public partial class FrmMain : Form
     {
         private UserProfileManager profileManager;
-        private UserProfile profile;
+        private UIUserProfile profile;
 
 
 
@@ -22,7 +22,7 @@ namespace DeployKeeper_AdminConsole
         {
             InitializeComponent();
             profileManager = new UserProfileManager(tvUserProfile);
-            profile = new UserProfile();
+            profile = new UIUserProfile();
             
         }
 
