@@ -59,9 +59,17 @@ namespace DeployKeeper_AdminConsole
         private void GetUserPolicy(int nUserId, int nProductId)
         {
             JObject obj = APIConnect.Instance.GetUserPolicy(nUserId, nProductId);
-            if (0 == Convert.ToInt32(obj["code"]))
+
+            int nResultCode = Convert.ToInt32(obj["code"]);
+            switch (nResultCode)
             {
-                m_policy = ((JArray)obj["data"]).ToObject<List<JObject>>();
+                case 0:
+                    m_policy = ((JArray)obj["data"]).ToObject<List<JObject>>();
+                    break;
+
+                default:
+                    m_policy = new List<JObject>();
+                    break;
             }
 
         }
@@ -148,7 +156,7 @@ namespace DeployKeeper_AdminConsole
         private void btnApply_Click(object sender, EventArgs e)
         {
             // 적용 버튼을 누른 경우, 정책정보를 서버로 전달한다.
-            APIConnect.Instance.SetCustomPolicy(m_nIdUser, m_nIdProduct, m_policy_after);
+            APIConnect.Instance.SetUserPolicy(m_nIdUser, m_nIdProduct, m_policy_after);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

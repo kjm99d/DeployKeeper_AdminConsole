@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+
 
 // ===================================================== //
 // ======================= Types ======================= //
@@ -22,6 +24,7 @@ namespace DeployKeeper_AdminConsole
         private TypeProduct m_products;
         private TypeUserProduct m_userProducts;
         private UIUserProfile m_userProfile;
+        private UIProductProfile m_productProfile;
 
         public UserProfileManager(TreeView view)
         {
@@ -31,10 +34,10 @@ namespace DeployKeeper_AdminConsole
 
             if (null == m_userProducts) m_userProducts = new TypeUserProduct();
 
-            SetClickEvent();
+            SetNodeClickEvent();
         }
 
-        private void CreateUserObject(ref JObject obj, TreeNode SelectedNode)
+        private void CreateUserObject(ref JObject obj, string strIdProduct, TreeNode SelectedNode)
         {
             // ID 로 찾는다.
             string strId = SelectedNode.Name.Split("USERPRODUCT_")[1];
@@ -43,7 +46,7 @@ namespace DeployKeeper_AdminConsole
             JObject? sel = null;
             foreach (var item in m_userProducts)
             {
-                if (Convert.ToInt32(item["id"]) == nId)
+                if (Convert.ToInt32(item["id"]) == nId && strIdProduct.Equals(item["product_id"].ToString()))
                 {
                     sel = item;
                     break;
@@ -60,33 +63,65 @@ namespace DeployKeeper_AdminConsole
 
         }
 
-        public void SetUserProfile(UIUserProfile userProfile)
+        public void SetUserProfile(UIUserProfile userControl)
         {
-            m_userProfile = userProfile;
+            m_userProfile = userControl;
+        }
+
+        public void SetProductProfile(UIProductProfile userControl)
+        {
+            m_productProfile = userControl;
+        }
+
+        private void SetGroup()
+        {
+            m_productProfile.Visible = true;
+            m_userProfile.Visible = false;
+        }
+        private void SetUser()
+        {
+            m_productProfile.Visible = false;
+            m_userProfile.Visible = true;
         }
 
         // 노드를 선택 했을 때 발생하는 이벤트
-        public void SetClickEvent()
+        public void SetNodeClickEvent()
         {
             if (null == m_view) return;
 
             m_view.AfterSelect += (sender, e) =>
             {
-                m_userProfile?.Clear();
-
                 TreeNode node = e?.Node;
-                if (node.Nodes.Count > 0 || false == node.Name.Contains("USERPRODUCT_")) return;
-                
+                string strNodeName = node.Name;
+                if (0 == strNodeName.IndexOf("USERPRODUCT_"))
+                {
+                    // :: 사용자 노드를 클릭한 경우 부모노트(제품 노드) 에서 제품 ID를 취득한다.
+                    string strIdProduct = node.Parent.Name.Split("PRODUCT_")[1];
 
-                // 노드가 사용자노드이다.
-                Debug.WriteLine("Selected User Node .. ");
 
-                // Notify UserProfile : 유저프로파일 컨트롤에 현재 클릭된 노드의 정보를 전달한다.
-                JObject obj = new JObject();
-                CreateUserObject(ref obj, node);
-                m_userProfile?.SetUser(obj);
-                
-                
+                    SetUser();
+
+                    m_userProfile?.Clear();
+
+                    // 노드가 사용자노드이다.
+                    Debug.WriteLine("Selected User Node .. ");
+
+                    // Notify UserProfile : 유저프로파일 컨트롤에 현재 클릭된 노드의 정보를 전달한다.
+                    JObject obj = new JObject();
+                    CreateUserObject(ref obj, strIdProduct, node);
+                    m_userProfile?.SetUser(obj);
+                }
+                else if (0 == strNodeName.IndexOf("PRODUCT_"))
+                {
+                    SetGroup();
+
+                    string strIdProduct = strNodeName.Split("_")[1];
+                    int nIdProduct = Convert.ToInt32(strIdProduct);
+                    string strNameProduct = m_products[nIdProduct];
+                    m_productProfile.SetProductInfo(strNameProduct, strIdProduct);
+
+                }
+
             };
         }
 
@@ -98,7 +133,7 @@ namespace DeployKeeper_AdminConsole
 
             // ======================================================== //
             
-            // Users 에 제품 목록을 추가한다.
+            // 리스트뷰에 제품 목록을 추가한다.
             foreach(var product in m_products)
             {
                 string NodeName = "PRODUCT_" + product.Key.ToString();
@@ -108,6 +143,7 @@ namespace DeployKeeper_AdminConsole
                 temp.Name = NodeName;
                 temp.Text = NodeText;
 
+                // 해당 제품에 가입된 사용자를 추가한다.
                 AddUserNode(product.Key, temp);
 
                 m_view?.Nodes.Add(temp);

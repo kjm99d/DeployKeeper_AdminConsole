@@ -29,67 +29,65 @@
         private void InitializeComponent()
         {
             tvUserProfile = new TreeView();
-            button1 = new Button();
             pnUserProfile = new Panel();
-            userProfile1 = new UIUserProfile();
-            pnUserProfile.SuspendLayout();
+            btnAddProduct = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // tvUserProfile
             // 
             tvUserProfile.Location = new Point(12, 12);
             tvUserProfile.Name = "tvUserProfile";
-            tvUserProfile.Size = new Size(312, 611);
+            tvUserProfile.Size = new Size(312, 569);
             tvUserProfile.TabIndex = 3;
             tvUserProfile.AfterSelect += treeView1_AfterSelect;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(1061, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 4;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // pnUserProfile
             // 
             pnUserProfile.BorderStyle = BorderStyle.FixedSingle;
-            pnUserProfile.Controls.Add(userProfile1);
             pnUserProfile.Location = new Point(330, 12);
             pnUserProfile.Name = "pnUserProfile";
             pnUserProfile.Size = new Size(725, 611);
             pnUserProfile.TabIndex = 5;
             // 
-            // userProfile1
+            // btnAddProduct
             // 
-            userProfile1.BackColor = SystemColors.Window;
-            userProfile1.Location = new Point(3, 3);
-            userProfile1.Name = "userProfile1";
-            userProfile1.Size = new Size(717, 603);
-            userProfile1.TabIndex = 0;
+            btnAddProduct.Location = new Point(12, 587);
+            btnAddProduct.Name = "btnAddProduct";
+            btnAddProduct.Size = new Size(128, 32);
+            btnAddProduct.TabIndex = 6;
+            btnAddProduct.Text = "제품추가";
+            btnAddProduct.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(196, 587);
+            button2.Name = "button2";
+            button2.Size = new Size(128, 32);
+            button2.TabIndex = 7;
+            button2.Text = "선택제품 삭제";
+            button2.UseVisualStyleBackColor = true;
             // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            ClientSize = new Size(1208, 638);
-            Controls.Add(pnUserProfile);
-            Controls.Add(button1);
+            ClientSize = new Size(1074, 638);
+            Controls.Add(button2);
+            Controls.Add(btnAddProduct);
             Controls.Add(tvUserProfile);
+            Controls.Add(pnUserProfile);
             Name = "FrmMain";
             Text = "DeployKeeper AdminConsole - 제어판";
             Load += FrmMain_Load;
-            pnUserProfile.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
         private TreeView tvUserProfile;
-        private Button button1;
         private Panel pnUserProfile;
-        private UIUserProfile userProfile1;
+        private Button btnAddProduct;
+        private Button button2;
     }
 }

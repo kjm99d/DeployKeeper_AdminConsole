@@ -58,6 +58,16 @@ namespace DeployKeeper_AdminConsole
 
         }
 
+        public JObject GetProductPolicy(int nProductId)
+        {
+            string url = host + "/api/admin/product/policy/" + nProductId.ToString();
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+            string strResp = HTTPConnect.Get(url, header);
+
+            return JObject.Parse(strResp);
+        }
+
         public JObject GetUserPolicy(int nUserId, int nProductId)
         {
             const string url = host + "/api/admin/user/policy";
@@ -75,6 +85,30 @@ namespace DeployKeeper_AdminConsole
             string strResp = HTTPConnect.Post(url, obj.ToString() ,header);
 
             return JObject.Parse(strResp);
+        }
+
+
+        public bool SetUserPolicy(int nUserId, int nProductId, List<JObject> data)
+        {
+            const string url = host + "/api/admin/user/policy";
+            JObject contents = new JObject();
+
+            contents["userId"] = nUserId;
+            contents["productId"] = nProductId;
+            contents["data"] = new JArray(data);
+
+            string jsonString = contents.ToString();
+
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+
+            var response = JObject.Parse(HTTPConnect.Patch(url, jsonString, header));
+            if (0 == Convert.ToInt32(response["code"]))
+            {
+                return true;
+            }
+
+            return false;
         }
 
 
@@ -127,28 +161,6 @@ namespace DeployKeeper_AdminConsole
             return false;
         }
 
-        public bool SetCustomPolicy(int nUserId, int nProductId, List<JObject> data)
-        {
-            const string url = host + "/api/admin/user/policy";
-            JObject contents = new JObject();
-
-            contents["userId"] = nUserId;
-            contents["productId"] = nProductId;
-            contents["data"] = new JArray(data);
-
-            string jsonString = contents.ToString();
-
-            Dictionary<string, string> header = new Dictionary<string, string>();
-            header.Add("authorization", "Bearer " + m_accessToken);
-
-            var response = JObject.Parse(HTTPConnect.Patch(url, jsonString, header));
-            if (0 == Convert.ToInt32(response["code"]))
-            {
-                return true;
-            }
-
-            return false;
-        }
 
     }
 }
