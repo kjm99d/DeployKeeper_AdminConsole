@@ -83,6 +83,16 @@ namespace DeployKeeper_AdminConsole
             return JObject.Parse(strResp);
         }
 
+        public JObject DeleteProductPolicy(int nIdProduct, int nIdPolicy)
+        {
+            string url = host + "/api/admin/product/policy/" + nIdProduct.ToString() + "/" + nIdPolicy.ToString();
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+            string strResp = HTTPConnect.Delete(url, header);
+
+            return JObject.Parse(strResp);
+        }
+
         public JObject GetUserPolicy(int nUserId, int nProductId)
         {
             const string url = host + "/api/admin/user/policy";

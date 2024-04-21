@@ -43,6 +43,7 @@
             // listView1
             // 
             listView1.Columns.AddRange(new ColumnHeader[] { chProductPolicyId, chProductPolicyName });
+            listView1.FullRowSelect = true;
             listView1.GridLines = true;
             listView1.Location = new Point(3, 119);
             listView1.MultiSelect = false;
@@ -80,6 +81,7 @@
             btnDeletePolicy.TabIndex = 2;
             btnDeletePolicy.Text = "선택정책 삭제";
             btnDeletePolicy.UseVisualStyleBackColor = true;
+            btnDeletePolicy.Click += btnDeletePolicy_Click;
             // 
             // tbPolicyName
             // 

@@ -123,9 +123,19 @@ namespace DeployKeeper_AdminConsole
 
         public static string Delete(string url)
         {
+            return Delete(url, new Dictionary<string, string>());
+        }
+
+        public static string Delete(string url, Dictionary<string, string> additionalHeader)
+        {
             try
             {
                 HttpClient client = new HttpClient();
+
+                foreach (var header in additionalHeader)
+                {
+                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                }
 
                 HttpResponseMessage response = client.DeleteAsync(url).Result;
                 response.EnsureSuccessStatusCode();

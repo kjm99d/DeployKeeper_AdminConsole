@@ -14,6 +14,7 @@ namespace DeployKeeper_AdminConsole
     public partial class UIProductProfile : UserControl
     {
         private int m_nIdProduct;
+        private List<JObject> m_productPolicy;
 
         public UIProductProfile()
         {
@@ -22,7 +23,8 @@ namespace DeployKeeper_AdminConsole
 
         private void UIProductProfile_Load(object sender, EventArgs e)
         {
-
+            if (null ==  m_productPolicy)
+                m_productPolicy = new List<JObject>();
         }
 
         public void SetProductInfo(string strProductName, string strProductID)
@@ -39,26 +41,22 @@ namespace DeployKeeper_AdminConsole
         private void GetProductPolicy(int nIdProduct)
         {
             listView1.Items.Clear();
-            JArray? policies = null;
 
 
             JObject resp = APIConnect.Instance.GetProductPolicy(nIdProduct);
             if (0 == Convert.ToInt32(resp["code"]))
             {
-                policies = (JArray)resp["data"];
+                m_productPolicy = ((JArray)resp["data"]).ToObject<List<JObject>>();
             }
 
-
-            if (null != policies)
+            foreach (var policy in m_productPolicy)
             {
-                foreach (var policy in policies)
-                {
-                    ListViewItem item = new ListViewItem(policy["id"].ToString());
-                    item.SubItems.Add(policy["policy_name"].ToString());
+                ListViewItem item = new ListViewItem(policy["id"].ToString());
+                item.SubItems.Add(policy["policy_name"].ToString());
 
-                    listView1.Items.Add(item);
-                }
+                listView1.Items.Add(item);
             }
+
         }
 
         private void btnAddPolicy_Click(object sender, EventArgs e)
@@ -79,7 +77,31 @@ namespace DeployKeeper_AdminConsole
                 MessageBox.Show("정책이 성공적으로 추가되었습니다.");
             }
             else
-                MessageBox.Show("정책이 추가에 실패하였습니다.");
+                MessageBox.Show("정책추가에 실패하였습니다.");
+        }
+
+        private void btnDeletePolicy_Click(object sender, EventArgs e)
+        {
+            var indicies = listView1.SelectedIndices;
+            if (indicies.Count > 0)
+            {
+                int nIndex = indicies[0];
+                
+                JObject obj = m_productPolicy[nIndex];
+                int nIdPolicy = Convert.ToInt32(obj["id"]);
+
+                JObject result = APIConnect.Instance.DeleteProductPolicy(m_nIdProduct, nIdPolicy);
+                int nResultCode = Convert.ToInt32(result["code"]);
+                if (0 == nResultCode)
+                {
+                    GetProductPolicy(m_nIdProduct);
+                    MessageBox.Show("정책이 성공적으로 삭제되었습니다.");
+                }
+                else
+                {
+                    MessageBox.Show("정책삭제에 실패하였습니다.");
+                }
+            }
         }
     }
 }
