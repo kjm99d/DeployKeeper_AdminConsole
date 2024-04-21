@@ -78,13 +78,13 @@ namespace DeployKeeper_AdminConsole
         {
             m_user = user;
 
-            m_nIdUser = Convert.ToInt32(m_user["user_id"]);
-            m_nIdProduct = Convert.ToInt32(m_user["product_id"]);
+            m_nIdUser       = Convert.ToInt32(m_user["user_id"]);
+            m_nIdProduct    = Convert.ToInt32(m_user["product_id"]);
 
-            tbReadOnlyUserId.Text = m_user["username"].ToString();
-            tbReadOnlyUserPasswd.Text = m_user["passwd"].ToString();
-            tbReadOnlyProductId.Text = m_user["product_id"].ToString();
-            tbReadOnlyProductName.Text = m_user["product_name"].ToString();
+            tbReadOnlyUserId.Text       = m_user["username"].ToString();
+            tbReadOnlyUserPasswd.Text   = m_user["passwd"].ToString();
+            tbReadOnlyProductId.Text    = m_user["product_id"].ToString();
+            tbReadOnlyProductName.Text  = m_user["product_name"].ToString();
 
             // 정책 가져오기
             GetUserPolicy(m_nIdUser, m_nIdProduct);

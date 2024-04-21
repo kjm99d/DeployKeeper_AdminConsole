@@ -97,8 +97,6 @@ namespace DeployKeeper_AdminConsole
                 {
                     // :: 사용자 노드를 클릭한 경우 부모노트(제품 노드) 에서 제품 ID를 취득한다.
                     string strIdProduct = node.Parent.Name.Split("PRODUCT_")[1];
-
-
                     SetUser();
 
                     m_userProfile?.Clear();
