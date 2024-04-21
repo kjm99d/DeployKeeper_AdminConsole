@@ -70,6 +70,7 @@
             btnAddPolicy.TabIndex = 1;
             btnAddPolicy.Text = "정책 추가";
             btnAddPolicy.UseVisualStyleBackColor = true;
+            btnAddPolicy.Click += btnAddPolicy_Click;
             // 
             // btnDeletePolicy
             // 

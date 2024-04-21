@@ -95,9 +95,19 @@ namespace DeployKeeper_AdminConsole
 
         public static string Put(string url, string jsonContent)
         {
+            return Put(url, jsonContent, new Dictionary<string, string>());
+        }
+
+        public static string Put(string url, string jsonContent, Dictionary<string, string> additionalHeader)
+        {
             try
             {
                 HttpClient client = new HttpClient();
+                
+                foreach (var header in additionalHeader)
+                {
+                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                }
 
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = client.PutAsync(url, content).Result;

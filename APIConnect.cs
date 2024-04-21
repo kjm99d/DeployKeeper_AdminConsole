@@ -46,6 +46,21 @@ namespace DeployKeeper_AdminConsole
 
         }
 
+        public JObject AddProductPolicy(int nIdProduct, string strPolicyName)
+        {
+            const string url = host + "/api/admin/product/policy";
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+
+            JObject obj         = new JObject();
+            obj["productId"]    = nIdProduct;
+            obj["policyName"]   = strPolicyName;
+
+            string strResp = HTTPConnect.Put(url, obj.ToString(), header);
+
+            return JObject.Parse(strResp);
+        }
+
 
         public JObject GetUserProductList()
         {
