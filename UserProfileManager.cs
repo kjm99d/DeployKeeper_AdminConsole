@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+
 
 
 // ===================================================== //
@@ -26,6 +28,8 @@ namespace DeployKeeper_AdminConsole
         private UIUserProfile m_userProfile;
         private UIProductProfile m_productProfile;
 
+        private Button m_btnRemoveProduct;
+
         public UserProfileManager(TreeView view)
         {
             if (null == m_view) m_view = view;
@@ -36,6 +40,8 @@ namespace DeployKeeper_AdminConsole
 
             SetNodeClickEvent();
         }
+
+        
 
         private void CreateUserObject(ref JObject obj, string strIdProduct, TreeNode SelectedNode)
         {
@@ -60,7 +66,29 @@ namespace DeployKeeper_AdminConsole
                 obj["product_name"] = "123";
             }
 
+        }
 
+        public void SetRemoveProductButton(Button button)
+        {
+            m_btnRemoveProduct = button;
+
+            m_btnRemoveProduct.Click += (s, e) =>
+            {
+                string strNameNode = m_view.SelectedNode.Name;
+                if (0 == strNameNode.IndexOf("PRODUCT_"))
+                {
+                    string strIdProduct = strNameNode.Split("PRODUCT_")[1];
+                    int nIdProduct = Convert.ToInt32(strIdProduct);
+                    JObject result = APIConnect.Instance.DeleteProduct(nIdProduct);
+                    int nResultCode = Convert.ToInt32(result["code"]);
+                    switch (nResultCode)
+                    {
+                        case 0:
+                            Update();
+                            break;
+                    }
+                }
+            };
         }
 
         public void SetUserProfile(UIUserProfile userControl)
@@ -85,10 +113,12 @@ namespace DeployKeeper_AdminConsole
         }
 
         // 노드를 선택 했을 때 발생하는 이벤트
-        public void SetNodeClickEvent()
+        private void SetNodeClickEvent()
         {
             if (null == m_view) return;
 
+            if (null != m_btnRemoveProduct) m_btnRemoveProduct.Enabled = false;
+            
             m_view.AfterSelect += (sender, e) =>
             {
                 TreeNode node = e?.Node;
@@ -108,6 +138,8 @@ namespace DeployKeeper_AdminConsole
                     JObject obj = new JObject();
                     CreateUserObject(ref obj, strIdProduct, node);
                     m_userProfile?.SetUser(obj);
+
+
                 }
                 else if (0 == strNodeName.IndexOf("PRODUCT_"))
                 {
@@ -118,6 +150,8 @@ namespace DeployKeeper_AdminConsole
                     string strNameProduct = m_products[nIdProduct];
                     m_productProfile.SetProductInfo(strNameProduct, strIdProduct);
 
+                    if (null != m_btnRemoveProduct) m_btnRemoveProduct.Enabled = true;
+                    
                 }
 
             };

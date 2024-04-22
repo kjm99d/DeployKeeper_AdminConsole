@@ -31,14 +31,15 @@
             tvUserProfile = new TreeView();
             pnUserProfile = new Panel();
             btnAddProduct = new Button();
-            button2 = new Button();
+            tbNewProductName = new TextBox();
+            btnRemoveProduct = new Button();
             SuspendLayout();
             // 
             // tvUserProfile
             // 
             tvUserProfile.Location = new Point(12, 12);
             tvUserProfile.Name = "tvUserProfile";
-            tvUserProfile.Size = new Size(312, 569);
+            tvUserProfile.Size = new Size(312, 553);
             tvUserProfile.TabIndex = 3;
             tvUserProfile.AfterSelect += treeView1_AfterSelect;
             // 
@@ -52,21 +53,32 @@
             // 
             // btnAddProduct
             // 
-            btnAddProduct.Location = new Point(12, 587);
+            btnAddProduct.Location = new Point(196, 571);
             btnAddProduct.Name = "btnAddProduct";
-            btnAddProduct.Size = new Size(128, 32);
+            btnAddProduct.Size = new Size(128, 23);
             btnAddProduct.TabIndex = 6;
             btnAddProduct.Text = "제품추가";
             btnAddProduct.UseVisualStyleBackColor = true;
+            btnAddProduct.Click += btnAddProduct_Click;
             // 
-            // button2
+            // tbNewProductName
             // 
-            button2.Location = new Point(196, 587);
-            button2.Name = "button2";
-            button2.Size = new Size(128, 32);
-            button2.TabIndex = 7;
-            button2.Text = "선택제품 삭제";
-            button2.UseVisualStyleBackColor = true;
+            tbNewProductName.Location = new Point(12, 571);
+            tbNewProductName.Name = "tbNewProductName";
+            tbNewProductName.PlaceholderText = "새로 추가할 제품명";
+            tbNewProductName.Size = new Size(178, 23);
+            tbNewProductName.TabIndex = 8;
+            tbNewProductName.TextAlign = HorizontalAlignment.Center;
+            // 
+            // btnRemoveProduct
+            // 
+            btnRemoveProduct.Enabled = false;
+            btnRemoveProduct.Location = new Point(196, 600);
+            btnRemoveProduct.Name = "btnRemoveProduct";
+            btnRemoveProduct.Size = new Size(128, 23);
+            btnRemoveProduct.TabIndex = 7;
+            btnRemoveProduct.Text = "선택제품 삭제";
+            btnRemoveProduct.UseVisualStyleBackColor = true;
             // 
             // FrmMain
             // 
@@ -74,7 +86,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1074, 638);
-            Controls.Add(button2);
+            Controls.Add(tbNewProductName);
+            Controls.Add(btnRemoveProduct);
             Controls.Add(btnAddProduct);
             Controls.Add(tvUserProfile);
             Controls.Add(pnUserProfile);
@@ -82,12 +95,14 @@
             Text = "DeployKeeper AdminConsole - 제어판";
             Load += FrmMain_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
         private TreeView tvUserProfile;
         private Panel pnUserProfile;
         private Button btnAddProduct;
-        private Button button2;
+        private TextBox tbNewProductName;
+        private Button btnRemoveProduct;
     }
 }

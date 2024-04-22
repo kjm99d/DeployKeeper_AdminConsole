@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -37,11 +38,30 @@ namespace DeployKeeper_AdminConsole
         {
             profileManager.SetUserProfile(userProfile);
             profileManager.SetProductProfile(productProfile);
+            profileManager.SetRemoveProductButton(btnRemoveProduct);
             profileManager.Update();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+
+        }
+
+        private void btnAddProduct_Click(object sender, EventArgs e)
+        {
+            string strProductName = tbNewProductName.Text;
+            JObject result = APIConnect.Instance.AddProduct(strProductName);
+            int nResultCode = Convert.ToInt32(result["code"]);
+            switch (nResultCode)
+            {
+                case 0:
+                    MessageBox.Show("제품추가에 성공하였습니다.");
+                    profileManager.Update();
+                    break;
+                case 301:
+                    MessageBox.Show("이미 존재하는 제품명입니다.");
+                    break;
+            }
 
         }
     }
