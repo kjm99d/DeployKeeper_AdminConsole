@@ -74,6 +74,12 @@ namespace DeployKeeper_AdminConsole
 
         }
 
+        public void SetUserDate(string start, string end)
+        {
+            dtStart.Text = start;
+            dtEnd.Text = end;
+        }
+
         public void SetUser(JObject user)
         {
             m_user = user;
@@ -157,6 +163,15 @@ namespace DeployKeeper_AdminConsole
         {
             // 적용 버튼을 누른 경우, 정책정보를 서버로 전달한다.
             APIConnect.Instance.SetUserPolicy(m_nIdUser, m_nIdProduct, m_policy_after);
+
+
+            string start = dtStart.Value.ToShortDateString();
+            string end = dtEnd.Value.ToShortDateString();
+            List<string> list = new List<string>();
+            list.Add(start);
+            list.Add(end);
+
+            APIConnect.Instance.SetUserExpirationDate(m_nIdUser, m_nIdProduct, list);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

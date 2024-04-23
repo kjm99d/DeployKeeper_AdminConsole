@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace DeployKeeper_AdminConsole
@@ -159,6 +160,41 @@ namespace DeployKeeper_AdminConsole
             }
 
             return false;
+        }
+
+        public bool SetUserExpirationDate(int nUserId, int nProductId, List<string> data)
+        {
+            const string url = host + "/api/admin/user/product/date";
+            JObject contents = new JObject();
+
+            contents["userId"] = nUserId;
+            contents["productId"] = nProductId;
+            contents["data"] = new JArray(data);
+
+            string jsonString = contents.ToString();
+
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+
+            var response = JObject.Parse(HTTPConnect.Patch(url, jsonString, header));
+            if (0 == Convert.ToInt32(response["code"]))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public JObject GetUserExpirationDate(int nUserId, int nProductId)
+        {
+            string url = host + $"/api/admin/user/product/date?userId={nProductId}&productId={nUserId}";
+
+            Dictionary<string, string> header = new Dictionary<string, string>();
+            header.Add("authorization", "Bearer " + m_accessToken);
+
+            var response = JObject.Parse(HTTPConnect.Get(url,  header));
+
+            return response;
         }
 
 

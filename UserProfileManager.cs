@@ -123,7 +123,7 @@ namespace DeployKeeper_AdminConsole
             {
                 TreeNode node = e?.Node;
                 string strNodeName = node.Name;
-                if (0 == strNodeName.IndexOf("USERPRODUCT_"))
+                if (0 == strNodeName.IndexOf("USERPRODUCT_")) // < 사용자 클릭
                 {
                     // :: 사용자 노드를 클릭한 경우 부모노트(제품 노드) 에서 제품 ID를 취득한다.
                     string strIdProduct = node.Parent.Name.Split("PRODUCT_")[1];
@@ -140,8 +140,16 @@ namespace DeployKeeper_AdminConsole
                     m_userProfile?.SetUser(obj);
 
 
+                    var res = APIConnect.Instance.GetUserExpirationDate(Convert.ToInt32(obj["user_id"]), Convert.ToInt32(strIdProduct));
+                    if (0 == Convert.ToInt32(res["code"]))
+                    {
+                        m_userProfile?.SetUserDate(res["data"][0]["start_date"].ToString(), res["data"][0]["end_date"].ToString());
+                    }
+                    
+
+
                 }
-                else if (0 == strNodeName.IndexOf("PRODUCT_"))
+                else if (0 == strNodeName.IndexOf("PRODUCT_")) // < 그룹 클릭
                 {
                     SetGroup();
 
