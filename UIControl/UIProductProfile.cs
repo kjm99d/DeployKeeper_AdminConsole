@@ -41,7 +41,7 @@ namespace DeployKeeper_AdminConsole
         private void GetProductPolicy(int nIdProduct)
         {
             listView1.Items.Clear();
-
+            m_productPolicy.Clear();
 
             JObject resp = APIConnect.Instance.GetProductPolicy(nIdProduct);
             if (0 == Convert.ToInt32(resp["code"]))
