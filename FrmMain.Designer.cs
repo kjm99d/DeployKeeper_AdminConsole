@@ -33,13 +33,14 @@
             btnAddProduct = new Button();
             tbNewProductName = new TextBox();
             btnRemoveProduct = new Button();
+            btnRefresh = new Button();
             SuspendLayout();
             // 
             // tvUserProfile
             // 
-            tvUserProfile.Location = new Point(12, 12);
+            tvUserProfile.Location = new Point(12, 41);
             tvUserProfile.Name = "tvUserProfile";
-            tvUserProfile.Size = new Size(312, 553);
+            tvUserProfile.Size = new Size(312, 524);
             tvUserProfile.TabIndex = 3;
             tvUserProfile.AfterSelect += treeView1_AfterSelect;
             // 
@@ -80,12 +81,23 @@
             btnRemoveProduct.Text = "선택제품 삭제";
             btnRemoveProduct.UseVisualStyleBackColor = true;
             // 
+            // btnRefresh
+            // 
+            btnRefresh.Location = new Point(12, 12);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(312, 23);
+            btnRefresh.TabIndex = 9;
+            btnRefresh.Text = "새로고침";
+            btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
+            // 
             // FrmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1074, 638);
+            Controls.Add(btnRefresh);
             Controls.Add(tbNewProductName);
             Controls.Add(btnRemoveProduct);
             Controls.Add(btnAddProduct);
@@ -104,5 +116,6 @@
         private Button btnAddProduct;
         private TextBox tbNewProductName;
         private Button btnRemoveProduct;
+        private Button btnRefresh;
     }
 }

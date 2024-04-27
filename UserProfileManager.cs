@@ -143,11 +143,10 @@ namespace DeployKeeper_AdminConsole
                     var res = APIConnect.Instance.GetUserExpirationDate(Convert.ToInt32(obj["user_id"]), Convert.ToInt32(strIdProduct));
                     if (0 == Convert.ToInt32(res["code"]))
                     {
-                        m_userProfile?.SetUserDate(res["data"][0]["start_date"].ToString(), res["data"][0]["end_date"].ToString());
+                        var data = res["data"][0];
+                        m_userProfile?.SetUserDate(data["start_date"].ToString(), data["end_date"].ToString(), data["alias"].ToString());
                     }
                     
-
-
                 }
                 else if (0 == strNodeName.IndexOf("PRODUCT_")) // < 그룹 클릭
                 {
@@ -205,10 +204,13 @@ namespace DeployKeeper_AdminConsole
 
                     string NodeName = "USERPRODUCT_" + userProduct["id"].ToString();
                     string NodeText = userProduct["username"].ToString();
-
+                    string alias = userProduct["alias"].ToString();
                     TreeNode temp = new TreeNode();
                     temp.Name = NodeName;
-                    temp.Text = NodeText;
+                    if (alias.Length <= 0)
+                        temp.Text = NodeText;
+                    else
+                        temp.Text = alias;
 
                     node.Nodes.Add(temp);
                 }

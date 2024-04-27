@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             gbUserInfo = new GroupBox();
+            label7 = new Label();
+            tbAlias = new TextBox();
+            label5 = new Label();
+            label6 = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            label2 = new Label();
+            label1 = new Label();
             dtEnd = new DateTimePicker();
             dtStart = new DateTimePicker();
             tbReadOnlyProductId = new TextBox();
@@ -43,18 +51,14 @@
             gbPolicy = new GroupBox();
             btnApply = new Button();
             btnCancel = new Button();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
             gbUserInfo.SuspendLayout();
             gbPolicy.SuspendLayout();
             SuspendLayout();
             // 
             // gbUserInfo
             // 
+            gbUserInfo.Controls.Add(label7);
+            gbUserInfo.Controls.Add(tbAlias);
             gbUserInfo.Controls.Add(label5);
             gbUserInfo.Controls.Add(label6);
             gbUserInfo.Controls.Add(label4);
@@ -69,10 +73,82 @@
             gbUserInfo.Controls.Add(tbReadOnlyUserId);
             gbUserInfo.Location = new Point(3, 3);
             gbUserInfo.Name = "gbUserInfo";
-            gbUserInfo.Size = new Size(347, 210);
+            gbUserInfo.Size = new Size(347, 253);
             gbUserInfo.TabIndex = 0;
             gbUserInfo.TabStop = false;
             gbUserInfo.Text = "사용자 계정 정보";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(6, 197);
+            label7.Name = "label7";
+            label7.Size = new Size(31, 15);
+            label7.TabIndex = 13;
+            label7.Text = "별명";
+            // 
+            // tbAlias
+            // 
+            tbAlias.Location = new Point(6, 215);
+            tbAlias.Name = "tbAlias";
+            tbAlias.PlaceholderText = "별명";
+            tbAlias.Size = new Size(136, 23);
+            tbAlias.TabIndex = 12;
+            tbAlias.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(166, 151);
+            label5.Name = "label5";
+            label5.Size = new Size(83, 15);
+            label5.TabIndex = 11;
+            label5.Text = "사용종료 일자";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(6, 151);
+            label6.Name = "label6";
+            label6.Size = new Size(83, 15);
+            label6.TabIndex = 10;
+            label6.Text = "사용시작 일자";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(166, 107);
+            label4.Name = "label4";
+            label4.Size = new Size(43, 15);
+            label4.TabIndex = 9;
+            label4.Text = "제품명";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(6, 107);
+            label3.Name = "label3";
+            label3.Size = new Size(47, 15);
+            label3.TabIndex = 8;
+            label3.Text = "제품 ID";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(6, 63);
+            label2.Name = "label2";
+            label2.Size = new Size(55, 15);
+            label2.TabIndex = 7;
+            label2.Text = "비밀번호";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(6, 19);
+            label1.Name = "label1";
+            label1.Size = new Size(43, 15);
+            label1.TabIndex = 6;
+            label1.Text = "아이디";
             // 
             // dtEnd
             // 
@@ -200,60 +276,6 @@
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(6, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(43, 15);
-            label1.TabIndex = 6;
-            label1.Text = "아이디";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(6, 63);
-            label2.Name = "label2";
-            label2.Size = new Size(55, 15);
-            label2.TabIndex = 7;
-            label2.Text = "비밀번호";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(6, 107);
-            label3.Name = "label3";
-            label3.Size = new Size(47, 15);
-            label3.TabIndex = 8;
-            label3.Text = "제품 ID";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(166, 107);
-            label4.Name = "label4";
-            label4.Size = new Size(43, 15);
-            label4.TabIndex = 9;
-            label4.Text = "제품명";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(166, 151);
-            label5.Name = "label5";
-            label5.Size = new Size(83, 15);
-            label5.TabIndex = 11;
-            label5.Text = "사용종료 일자";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(6, 151);
-            label6.Name = "label6";
-            label6.Size = new Size(83, 15);
-            label6.TabIndex = 10;
-            label6.Text = "사용시작 일자";
-            // 
             // UIUserProfile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -295,5 +317,7 @@
         private Label label3;
         private Label label2;
         private Label label1;
+        private Label label7;
+        private TextBox tbAlias;
     }
 }

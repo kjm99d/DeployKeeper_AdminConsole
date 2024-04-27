@@ -162,7 +162,7 @@ namespace DeployKeeper_AdminConsole
             return false;
         }
 
-        public bool SetUserExpirationDate(int nUserId, int nProductId, List<string> data)
+        public bool SetUserExpirationDate(int nUserId, int nProductId, List<string> data, string alias)
         {
             const string url = host + "/api/admin/user/product/date";
             JObject contents = new JObject();
@@ -170,6 +170,7 @@ namespace DeployKeeper_AdminConsole
             contents["userId"] = nUserId;
             contents["productId"] = nProductId;
             contents["data"] = new JArray(data);
+            contents["alias"] = alias;
 
             string jsonString = contents.ToString();
 

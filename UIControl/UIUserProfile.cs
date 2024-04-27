@@ -74,10 +74,11 @@ namespace DeployKeeper_AdminConsole
 
         }
 
-        public void SetUserDate(string start, string end)
+        public void SetUserDate(string start, string end, string alias)
         {
             dtStart.Text = start;
             dtEnd.Text = end;
+            tbAlias.Text = alias;
         }
 
         public void SetUser(JObject user)
@@ -167,11 +168,13 @@ namespace DeployKeeper_AdminConsole
 
             string start = dtStart.Value.ToShortDateString();
             string end = dtEnd.Value.ToShortDateString();
+            string alias = tbAlias.Text;
             List<string> list = new List<string>();
             list.Add(start);
             list.Add(end);
 
-            APIConnect.Instance.SetUserExpirationDate(m_nIdUser, m_nIdProduct, list);
+            APIConnect.Instance.SetUserExpirationDate(m_nIdUser, m_nIdProduct, list, alias);
+            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

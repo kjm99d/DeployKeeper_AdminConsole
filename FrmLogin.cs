@@ -34,7 +34,7 @@ namespace DeployKeeper_AdminConsole
 #if DEBUG
             APIConnect handler = APIConnect.Instance;
 
-            if (true == handler.Login("adminUser", "password123"))
+            if (true == handler.Login("devadmin", "loginAdminPass0105"))
             {
 
                 // MessageBox.Show("관리자입니다.", "알림");
