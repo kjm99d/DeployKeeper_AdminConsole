@@ -16,6 +16,7 @@ namespace DeployKeeper_AdminConsole
         private static APIConnect? instance;
         private static readonly object lockObject = new object();
 
+        //private const string host = "https://kjm99d.gabia.io";
         private const string host = "http://localhost:8080";
         private string m_accessToken = "";
 
@@ -188,7 +189,7 @@ namespace DeployKeeper_AdminConsole
 
         public JObject GetUserExpirationDate(int nUserId, int nProductId)
         {
-            string url = host + $"/api/admin/user/product/date?userId={nProductId}&productId={nUserId}";
+            string url = host + $"/api/admin/user/product/date?userId={nUserId}&productId={nProductId}";
 
             Dictionary<string, string> header = new Dictionary<string, string>();
             header.Add("authorization", "Bearer " + m_accessToken);
