@@ -31,7 +31,7 @@ namespace DeployKeeper_AdminConsole
 
         private void UserProfile_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void CreateModifyPolicy()
@@ -85,13 +85,13 @@ namespace DeployKeeper_AdminConsole
         {
             m_user = user;
 
-            m_nIdUser       = Convert.ToInt32(m_user["user_id"]);
-            m_nIdProduct    = Convert.ToInt32(m_user["product_id"]);
+            m_nIdUser = Convert.ToInt32(m_user["user_id"]);
+            m_nIdProduct = Convert.ToInt32(m_user["product_id"]);
 
-            tbReadOnlyUserId.Text       = m_user["username"].ToString();
-            tbReadOnlyUserPasswd.Text   = m_user["passwd"].ToString();
-            tbReadOnlyProductId.Text    = m_user["product_id"].ToString();
-            tbReadOnlyProductName.Text  = m_user["product_name"].ToString();
+            tbReadOnlyUserId.Text = m_user["username"].ToString();
+            tbReadOnlyUserPasswd.Text = m_user["passwd"].ToString();
+            tbReadOnlyProductId.Text = m_user["product_id"].ToString();
+            tbReadOnlyProductName.Text = m_user["product_name"].ToString();
 
             // 정책 가져오기
             GetUserPolicy(m_nIdUser, m_nIdProduct);
@@ -174,7 +174,7 @@ namespace DeployKeeper_AdminConsole
             list.Add(end);
 
             APIConnect.Instance.SetUserExpirationDate(m_nIdUser, m_nIdProduct, list, alias);
-            
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -182,6 +182,83 @@ namespace DeployKeeper_AdminConsole
             // 취소 버튼을 누른 경우 정책을 원상복구 시키고 취소 버튼을 비활성화한다.
             RestoreUserPolicy();
             btnCancel.Enabled = false;
+        }
+
+        private void btnExportUserPolicy_Click(object sender, EventArgs e)
+        {
+            // List<JObject>를 JArray로 변환
+            JArray jArray = new JArray(m_policy_after);
+
+            // SaveFileDialog 생성 및 설정
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                Title = "Save JSON File"
+            };
+
+            // 파일 저장 대화상자를 표시
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // 선택된 경로에 JArray를 JSON 파일로 저장
+                string filePath = saveFileDialog.FileName;
+                File.WriteAllText(filePath, jArray.ToString());
+
+                // 저장 완료 메시지 출력 (optional)
+                Console.WriteLine($"JArray가 {filePath}에 저장되었습니다.");
+            }
+            else
+            {
+                // 저장 취소 메시지 출력 (optional)
+                Console.WriteLine("파일 저장이 취소되었습니다.");
+            }
+
+        }
+
+        private void btnLoadUserPolicy_Click(object sender, EventArgs e)
+        {
+
+            // JSON 파일을 불러오기 위해 OpenFileDialog 사용
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                Title = "Open JSON File"
+            };
+
+
+            // 파일 열기 대화상자를 표시
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // 선택된 파일 경로
+                string filePath = openFileDialog.FileName;
+
+                try
+                {
+                    // 파일 내용을 읽어 JArray로 변환
+                    string fileContent = File.ReadAllText(filePath);
+                    JArray jArray = JArray.Parse(fileContent);
+
+                    // 불러온 JArray 출력 (optional)
+                    Console.WriteLine("JArray 불러오기 성공:");
+                    Console.WriteLine(jArray.ToString());
+
+                    // === Validate 로직 필요 === // 
+
+                    m_policy = jArray.ToObject<List<JObject>>();
+                    RestoreUserPolicy();
+                    // ========================== //
+                }
+                catch (Exception ex)
+                {
+                    // 오류 발생 시 메시지 출력
+                    Console.WriteLine("파일을 불러오는 중 오류가 발생했습니다:");
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                // 불러오기 취소 메시지 출력 (optional)
+                Console.WriteLine("파일 불러오기가 취소되었습니다.");
+            }
         }
     }
 }

@@ -51,6 +51,8 @@
             gbPolicy = new GroupBox();
             btnApply = new Button();
             btnCancel = new Button();
+            btnLoadUserPolicy = new Button();
+            btnExportUserPolicy = new Button();
             gbUserInfo.SuspendLayout();
             gbPolicy.SuspendLayout();
             SuspendLayout();
@@ -276,11 +278,33 @@
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
             // 
+            // btnLoadUserPolicy
+            // 
+            btnLoadUserPolicy.Location = new Point(534, 233);
+            btnLoadUserPolicy.Name = "btnLoadUserPolicy";
+            btnLoadUserPolicy.Size = new Size(177, 23);
+            btnLoadUserPolicy.TabIndex = 5;
+            btnLoadUserPolicy.Text = "정책 불러오기";
+            btnLoadUserPolicy.UseVisualStyleBackColor = true;
+            btnLoadUserPolicy.Click += btnLoadUserPolicy_Click;
+            // 
+            // btnExportUserPolicy
+            // 
+            btnExportUserPolicy.Location = new Point(356, 233);
+            btnExportUserPolicy.Name = "btnExportUserPolicy";
+            btnExportUserPolicy.Size = new Size(177, 23);
+            btnExportUserPolicy.TabIndex = 6;
+            btnExportUserPolicy.Text = "정책 내보내기";
+            btnExportUserPolicy.UseVisualStyleBackColor = true;
+            btnExportUserPolicy.Click += btnExportUserPolicy_Click;
+            // 
             // UIUserProfile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
+            Controls.Add(btnExportUserPolicy);
+            Controls.Add(btnLoadUserPolicy);
             Controls.Add(btnCancel);
             Controls.Add(btnApply);
             Controls.Add(gbPolicy);
@@ -319,5 +343,7 @@
         private Label label1;
         private Label label7;
         private TextBox tbAlias;
+        private Button btnLoadUserPolicy;
+        private Button btnExportUserPolicy;
     }
 }

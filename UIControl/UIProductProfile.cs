@@ -23,7 +23,7 @@ namespace DeployKeeper_AdminConsole
 
         private void UIProductProfile_Load(object sender, EventArgs e)
         {
-            if (null ==  m_productPolicy)
+            if (null == m_productPolicy)
                 m_productPolicy = new List<JObject>();
         }
 
@@ -86,7 +86,7 @@ namespace DeployKeeper_AdminConsole
             if (indicies.Count > 0)
             {
                 int nIndex = indicies[0];
-                
+
                 JObject obj = m_productPolicy[nIndex];
                 int nIdPolicy = Convert.ToInt32(obj["id"]);
 
@@ -103,5 +103,6 @@ namespace DeployKeeper_AdminConsole
                 }
             }
         }
+
     }
 }
