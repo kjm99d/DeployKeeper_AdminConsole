@@ -31,10 +31,10 @@ namespace DeployKeeper_AdminConsole
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-#if DEBUG
+
             APIConnect handler = APIConnect.Instance;
 
-            if (true == handler.Login("devadmin", "loginAdminPass0105"))
+            if (true == handler.Login("adminUser", "adminpassword1234!@#$qwer"))
             {
 
                 // MessageBox.Show("관리자입니다.", "알림");
@@ -44,7 +44,7 @@ namespace DeployKeeper_AdminConsole
 
                 Environment.Exit(0); // 프로세스 종료
             }
-#endif
+
         }
     }
 }

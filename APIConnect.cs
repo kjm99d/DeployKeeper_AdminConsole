@@ -48,6 +48,14 @@ namespace DeployKeeper_AdminConsole
 
         }
 
+        public JObject GetProductLog(int nIdProduct)
+        {
+            string url = host + "/api/user/log?productId=" + nIdProduct.ToString();
+            string strResp = HTTPConnect.Get(url);
+
+            return JObject.Parse(strResp);
+        }
+
         public JObject AddProduct(string strNameProduct)
         {
             const string url = host + "/api/admin/product";
@@ -109,6 +117,8 @@ namespace DeployKeeper_AdminConsole
 
             return JObject.Parse(strResp);
         }
+
+
 
         public JObject DeleteProductPolicy(int nIdProduct, int nIdPolicy)
         {

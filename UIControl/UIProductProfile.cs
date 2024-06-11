@@ -15,6 +15,7 @@ namespace DeployKeeper_AdminConsole
     {
         private int m_nIdProduct;
         private List<JObject> m_productPolicy;
+        private List<JObject> m_productLog;
 
         public UIProductProfile()
         {
@@ -25,6 +26,9 @@ namespace DeployKeeper_AdminConsole
         {
             if (null == m_productPolicy)
                 m_productPolicy = new List<JObject>();
+
+            if (null == m_productLog)
+                m_productLog = new List<JObject>();
         }
 
         public void SetProductInfo(string strProductName, string strProductID)
@@ -35,6 +39,28 @@ namespace DeployKeeper_AdminConsole
             // 정책을 가져온 후 UI에 반영한다.
             m_nIdProduct = Convert.ToInt32(strProductID);
             GetProductPolicy(m_nIdProduct);
+            GetProductLog(m_nIdProduct);
+
+        }
+
+        private void GetProductLog(int nIdProduct)
+        {
+            listView2.Items.Clear();
+            m_productLog.Clear();
+
+            JObject resp = APIConnect.Instance.GetProductLog(nIdProduct);
+            if (0 == Convert.ToInt32(resp["code"]))
+            {
+                m_productLog = ((JArray)resp["data"]).ToObject<List<JObject>>();
+            }
+
+            foreach (var log in m_productLog)
+            {
+                ListViewItem item = new ListViewItem(log["log_time"].ToString());
+                item.SubItems.Add(log["msg"].ToString());
+
+                listView2.Items.Add(item);
+            }
 
         }
 

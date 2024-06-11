@@ -38,6 +38,9 @@
             tbReadOnlyProductName = new TextBox();
             tbReadOnlyProductID = new TextBox();
             label2 = new Label();
+            listView2 = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
             SuspendLayout();
             // 
             // listView1
@@ -128,11 +131,34 @@
             label2.TabIndex = 6;
             label2.Text = "제품 ID";
             // 
+            // listView2
+            // 
+            listView2.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
+            listView2.FullRowSelect = true;
+            listView2.GridLines = true;
+            listView2.Location = new Point(3, 402);
+            listView2.Name = "listView2";
+            listView2.Size = new Size(712, 195);
+            listView2.TabIndex = 8;
+            listView2.UseCompatibleStateImageBehavior = false;
+            listView2.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Time";
+            columnHeader1.Width = 100;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Log";
+            columnHeader2.Width = 580;
+            // 
             // UIProductProfile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
+            Controls.Add(listView2);
             Controls.Add(tbReadOnlyProductID);
             Controls.Add(label2);
             Controls.Add(tbReadOnlyProductName);
@@ -160,5 +186,8 @@
         private TextBox tbReadOnlyProductName;
         private TextBox tbReadOnlyProductID;
         private Label label2;
+        private ListView listView2;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
     }
 }
